@@ -21,7 +21,7 @@ app.use(Quasar, { config: {} })
 app.mount('#inventory-menus')
 
 function showBlur() {
-    $.post('https://qb-inventory/showBlur');
+    $.post('https://lj-inventory/showBlur');
 }
 
 var InventoryOption = "0, 0, 0";
@@ -67,7 +67,7 @@ $(document).on("dblclick", ".item-slot", function(e) {
     if (ItemData) {
         Inventory.Close();
         $.post(
-            "https://qb-inventory/UseItem",
+            "https://lj-inventory/UseItem",
             JSON.stringify({
                 inventory: ItemInventory,
                 item: ItemData,
@@ -252,10 +252,10 @@ function changeInventoryColor(color) {
     $( ".player-inventory-bg" ).css( "background-color", color);
     $( ".other-inventory-bg" ).css( "background-color", color);
     $( ".inv-options" ).css( "background-color", color);
-    localStorage.setItem('qb-inventory-color', color);
+    localStorage.setItem('lj-inventory-color', color);
 }
 
-const savedColor = localStorage.getItem('qb-inventory-color');
+const savedColor = localStorage.getItem('lj-inventory-color');
 
 if (savedColor) {
     changeInventoryColor(savedColor)
@@ -270,7 +270,7 @@ $('#favcolor').change(function(){
 
 function FormatAttachmentInfo(data) {
     $.post(
-        "https://qb-inventory/GetWeaponData",
+        "https://lj-inventory/GetWeaponData",
         JSON.stringify({
             weapon: data.name,
             ItemData: ClickedItemData,
@@ -368,7 +368,7 @@ function handleAttachmentDrag() {
         hoverClass: "weapon-attachments-remove-hover",
         drop: function(event, ui) {
             $.post(
-                "https://qb-inventory/RemoveAttachment",
+                "https://lj-inventory/RemoveAttachment",
                 JSON.stringify({
                     AttachmentData: AttachmentDraggingData,
                     WeaponData: ClickedItemData,
@@ -436,7 +436,7 @@ $(document).on("click", "#weapon-attachments", function(e) {
         FormatAttachmentInfo(ClickedItemData);
     } else {
         $.post(
-            "https://qb-inventory/Notify",
+            "https://lj-inventory/Notify",
             JSON.stringify({
                 message: "Attachments are unavailable for this gun.",
                 type: "error",
@@ -823,7 +823,7 @@ function handleDragDrop() {
                     Inventory.Close();
                 }
                 $.post(
-                    "https://qb-inventory/UseItem",
+                    "https://lj-inventory/UseItem",
                     JSON.stringify({
                         inventory: fromInventory,
                         item: fromData,
@@ -847,7 +847,7 @@ function handleDragDrop() {
             }
             $(this).css("background", "rgba(35,35,35, 0.7");
             $.post(
-                "https://qb-inventory/DropItem",
+                "https://lj-inventory/DropItem",
                 JSON.stringify({
                     inventory: fromInventory,
                     item: fromData,
@@ -1100,7 +1100,7 @@ $(document).on("click", ".CombineItem", function(e) {
     e.preventDefault();
     if (combineslotData.toData.combinable.anim != null) {
         $.post(
-            "https://qb-inventory/combineWithAnim",
+            "https://lj-inventory/combineWithAnim",
             JSON.stringify({
                 combineData: combineslotData.toData.combinable,
                 usedItem: combineslotData.toData.name,
@@ -1109,7 +1109,7 @@ $(document).on("click", ".CombineItem", function(e) {
         );
     } else {
         $.post(
-            "https://qb-inventory/combineItem",
+            "https://lj-inventory/combineItem",
             JSON.stringify({
                 reward: combineslotData.toData.combinable.reward,
                 toItem: combineslotData.toData.name,
@@ -1235,7 +1235,7 @@ function optionSwitch(
     }
 
     $.post(
-        "https://qb-inventory/SetInventoryData",
+        "https://lj-inventory/SetInventoryData",
         JSON.stringify({
             fromInventory: $fromInv.attr("data-inventory"),
             toInventory: $toInv.attr("data-inventory"),
@@ -1669,9 +1669,9 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
                 }
             }
-            $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
+            $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
             $.post(
-                "https://qb-inventory/SetInventoryData",
+                "https://lj-inventory/SetInventoryData",
                 JSON.stringify({
                     fromInventory: $fromInv.attr("data-inventory"),
                     toInventory: $toInv.attr("data-inventory"),
@@ -1688,7 +1688,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     isItemAllowed(fromData.name, toData.combinable.accept)
                 ) {
                     $.post(
-                        "https://qb-inventory/getCombineItem",
+                        "https://lj-inventory/getCombineItem",
                         JSON.stringify({ item: toData.combinable.reward }),
                         function(item) {
                             $(".combine-option-text").html(
@@ -1926,7 +1926,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
 
                     $.post(
-                        "https://qb-inventory/SetInventoryData",
+                        "https://lj-inventory/SetInventoryData",
                         JSON.stringify({
                             fromInventory: $fromInv.attr("data-inventory"),
                             toInventory: $toInv.attr("data-inventory"),
@@ -1972,7 +1972,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
 
                     $.post(
-                        "https://qb-inventory/SetInventoryData",
+                        "https://lj-inventory/SetInventoryData",
                         JSON.stringify({
                             fromInventory: $fromInv.attr("data-inventory"),
                             toInventory: $toInv.attr("data-inventory"),
@@ -1982,7 +1982,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         })
                     );
                 }
-                $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
+                $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
             } else if (
                 fromData.amount > $toAmount &&
                 (toData == undefined || toData == null)
@@ -2255,9 +2255,9 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         }
                     }
                 }
-                $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
+                $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
                 $.post(
-                    "https://qb-inventory/SetInventoryData",
+                    "https://lj-inventory/SetInventoryData",
                     JSON.stringify({
                         fromInventory: $fromInv.attr("data-inventory"),
                         toInventory: $toInv.attr("data-inventory"),
@@ -2296,7 +2296,7 @@ function InventoryError($elinv, $elslot) {
             .find("[data-slot=" + $elslot + "]")
             .css("background", "rgba(255, 255, 255, 0.3)");
     }, 500);
-    $.post("https://qb-inventory/PlayDropFail", JSON.stringify({}));
+    $.post("https://lj-inventory/PlayDropFail", JSON.stringify({}));
 }
 
 var requiredItemOpen = false;
@@ -2311,7 +2311,7 @@ var requiredItemOpen = false;
     Inventory.dropmaxweight = 100000;
 
     Inventory.Error = function() {
-        $.post("https://qb-inventory/PlayDropFail", JSON.stringify({}));
+        $.post("https://lj-inventory/PlayDropFail", JSON.stringify({}));
     };
 
     Inventory.IsWeaponBlocked = function(WeaponName) {
@@ -2721,7 +2721,7 @@ var requiredItemOpen = false;
         if ($("#rob-money").length) {
             $("#rob-money").remove();
         }
-        $.post("https://qb-inventory/CloseInventory", JSON.stringify({}));
+        $.post("https://lj-inventory/CloseInventory", JSON.stringify({}));
 
         if (AttachmentScreenActive) {
             $("#qbcore-inventory").css({ left: "0vw" });
@@ -3044,7 +3044,7 @@ $(document).on("click", "#rob-money", function(e) {
     e.preventDefault();
     var TargetId = $(this).data("TargetId");
     $.post(
-        "https://qb-inventory/RobMoney",
+        "https://lj-inventory/RobMoney",
         JSON.stringify({
             TargetId: TargetId,
         })
@@ -3067,7 +3067,7 @@ $("#item-give").droppable({
             amount = fromData.amount;
         }
         $.post(
-            "https://qb-inventory/GiveItem",
+            "https://lj-inventory/GiveItem",
             JSON.stringify({
                 inventory: fromInventory,
                 item: fromData,
